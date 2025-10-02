@@ -1,4 +1,4 @@
-// API principal para Vercel Functions
+// Manejador principal para todas las rutas API en Vercel
 const express = require('express')
 const cors = require('cors')
 const { Pool } = require('pg')
@@ -9,9 +9,7 @@ const app = express()
 
 // Configuración CORS para producción
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://tu-app.vercel.app'] // Cambia por tu dominio real
-    : ['http://localhost:5173', 'http://127.0.0.1:5173'],
+  origin: true, // Permitir todos los orígenes
   credentials: true
 }))
 
