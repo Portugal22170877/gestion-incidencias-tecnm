@@ -1,4 +1,4 @@
-const { Pool } = require('pg');
+const { Client } = require('pg');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -16,17 +16,8 @@ module.exports = async (req, res) => {
     return res.status(405).json({ success: false, message: 'Método no permitido' });
   }
 
-  // Verificar variables de entorno
-  if (!process.env.DATABASE_URL) {
-    console.error('DATABASE_URL no está configurado');
-    return res.status(500).json({ 
-      success: false, 
-      message: 'Error de configuración del servidor' 
-    });
-  }
+  let client;
 
-  let pool;
-  
   try {
     const { email, password } = req.body;
 
@@ -37,22 +28,25 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Crear conexión a la base de datos
-    pool = new Pool({
+    // Conectar a la base de datos
+    client = new Client({
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false }
     });
 
-    console.log('Intentando login para:', email);
+    await client.connect();
 
-    const result = await pool.query(`
-      SELECT id_usuario, nombre_usuario, correo, password_hash, rol, departamento_id, activo
-      FROM users 
-      WHERE correo = $1 AND activo = 'activo'
-    `, [email]);
-
-    console.log('Usuarios encontrados:', result.rows.length);
-
+    // Buscar usuario en la base de datos
+    const query = `
+      SELECT u.id_usuario, u.nombre_usuario, u.correo, u.contrasena_hash, u.rol, u.id_departamento,
+             d.nombre_departamento
+      FROM usuarios u
+      LEFT JOIN departamentos d ON u.id_departamento = d.id_departamento
+      WHERE u.correo = $1
+    `;
+    
+    const result = await client.query(query, [email]);
+    
     if (result.rows.length === 0) {
       return res.status(401).json({ 
         success: false, 
@@ -61,38 +55,30 @@ module.exports = async (req, res) => {
     }
 
     const user = result.rows[0];
-    console.log('Usuario encontrado:', user.correo);
 
-    const passwordMatch = await bcrypt.compare(password, user.password_hash);
-    console.log('Password match:', passwordMatch);
-
-    if (!passwordMatch) {
+    // Verificar contraseña
+    const isValidPassword = await bcrypt.compare(password, user.contrasena_hash);
+    
+    if (!isValidPassword) {
       return res.status(401).json({ 
         success: false, 
         message: 'Credenciales inválidas' 
       });
     }
 
-    // Actualizar último login
-    await pool.query(
-      'UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id_usuario = $1', 
-      [user.id_usuario]
-    );
-
     // Crear token JWT
     const token = jwt.sign(
-      { 
+      {
         id: user.id_usuario,
         email: user.correo,
         role: user.rol,
-        department_id: user.departamento_id
+        department_id: user.id_departamento
       },
-      process.env.JWT_SECRET || 'tu_clave_secreta_aqui',
+      process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
 
-    console.log('Login exitoso para:', email);
-
+    // Respuesta exitosa
     return res.json({
       success: true,
       token,
@@ -101,23 +87,24 @@ module.exports = async (req, res) => {
         name: user.nombre_usuario,
         email: user.correo,
         role: user.rol,
-        department_id: user.departamento_id
+        department_id: user.id_departamento,
+        department_name: user.nombre_departamento
       }
     });
 
   } catch (error) {
-    console.error('Error detallado en login:', error);
+    console.error('Error en login:', error);
     return res.status(500).json({ 
       success: false, 
       message: 'Error interno del servidor',
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   } finally {
-    if (pool) {
+    if (client) {
       try {
-        await pool.end();
-      } catch (closeError) {
-        console.error('Error cerrando conexión:', closeError);
+        await client.end();
+      } catch (error) {
+        console.error('Error cerrando conexión:', error);
       }
     }
   }
