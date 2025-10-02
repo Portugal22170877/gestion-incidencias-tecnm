@@ -1,43 +1,16 @@
 import axios from 'axios'
 
-// Configuración automática del API base URL
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? '/api'  // En producción usar rutas relativas de Vercel
-  : 'http://localhost:3001/api'  // En desarrollo usar backend local
+// Configuración temporal: usar Supabase directamente
+const API_BASE_URL = 'https://duacxiqdmrlpporfpkeh.supabase.co/rest/v1'
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1YWN4aXFkbXJscHBvcmZwa2VoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc4MjE5NDcsImV4cCI6MjA0MzM5Nzk0N30.0NSGHGm8Zq8nAPX_RNELFUQi68gJ-lYR-rYQN0z90YI'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`
   }
 })
-
-// Interceptor para agregar token de autorización
-apiClient.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
-)
-
-// Interceptor para manejo de respuestas
-apiClient.interceptors.response.use(
-  (response) => {
-    return response
-  },
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token')
-      window.location.href = '/login'
-    }
-    return Promise.reject(error)
-  }
-)
 
 export default apiClient
