@@ -1,0 +1,14 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo circular azul institucional -->
+  <circle cx="16" cy="16" r="16" fill="#1e3a8a"/>
+  
+  <!-- Letra T estilizada en el centro -->
+  <rect x="6" y="8" width="20" height="3" fill="white"/>
+  <rect x="14.5" y="8" width="3" height="16" fill="white"/>
+  
+  <!-- Punto decorativo dorado -->
+  <circle cx="16" cy="26" r="2" fill="#f59e0b"/>
+  
+  <!-- Borde sutil -->
+  <circle cx="16" cy="16" r="15.5" fill="none" stroke="#f59e0b" stroke-width="1" opacity="0.3"/>
+</svg>

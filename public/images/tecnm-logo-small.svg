@@ -1,0 +1,46 @@
+<svg width="150" height="40" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="blueSmall" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1e40af"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+    
+    <linearGradient id="orangeSmall" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ea580c"/>
+      <stop offset="100%" style="stop-color:#f97316"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo -->
+  <rect width="150" height="40" fill="white" rx="4"/>
+  
+  <!-- Escudo pequeño -->
+  <g transform="translate(5, 5)">
+    <circle cx="15" cy="15" r="12" fill="url(#blueSmall)"/>
+    
+    <!-- T simplificada -->
+    <g transform="translate(15, 15)" fill="white">
+      <rect x="-5" y="-7" width="10" height="2"/>
+      <rect x="-1" y="-5" width="2" height="10"/>
+    </g>
+    
+    <!-- Punto naranja -->
+    <circle cx="15" cy="22" r="1.5" fill="url(#orangeSmall)"/>
+  </g>
+  
+  <!-- Texto compacto -->
+  <g transform="translate(35, 8)">
+    <text x="0" y="12" fill="url(#blueSmall)" font-family="Arial, sans-serif" 
+          font-size="11" font-weight="bold">
+      TECNM Culiacán
+    </text>
+    
+    <text x="0" y="26" fill="url(#orangeSmall)" font-family="Arial, sans-serif" 
+          font-size="7" font-weight="500">
+      Gestión de Incidencias
+    </text>
+  </g>
+  
+  <!-- Línea inferior -->
+  <rect x="0" y="37" width="150" height="3" fill="url(#orangeSmall)" rx="1"/>
+</svg>
