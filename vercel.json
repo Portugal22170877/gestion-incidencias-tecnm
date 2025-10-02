@@ -1,13 +1,19 @@
 {
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
   "functions": {
-    "api/**/*.js": {
+    "api/login.js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/test.js": {
       "runtime": "nodejs18.x"
     }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    }
-  ]
+  }
 }
