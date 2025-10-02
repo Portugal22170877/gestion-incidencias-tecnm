@@ -94,10 +94,17 @@ module.exports = async (req, res) => {
 
   } catch (error) {
     console.error('Error en login:', error);
+    console.error('DATABASE_URL exists:', !!process.env.DATABASE_URL);
+    console.error('JWT_SECRET exists:', !!process.env.JWT_SECRET);
     return res.status(500).json({ 
       success: false, 
       message: 'Error interno del servidor',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      details: error.message,
+      env_check: {
+        has_db_url: !!process.env.DATABASE_URL,
+        has_jwt_secret: !!process.env.JWT_SECRET,
+        node_env: process.env.NODE_ENV
+      }
     });
   } finally {
     if (client) {
