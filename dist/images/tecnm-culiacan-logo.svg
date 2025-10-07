@@ -1,0 +1,63 @@
+<svg width="280" height="70" viewBox="0 0 280 70" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradientes simples -->
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1e40af"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+    
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ea580c"/>
+      <stop offset="100%" style="stop-color:#f97316"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo blanco limpio -->
+  <rect width="280" height="70" fill="white" rx="8"/>
+  
+  <!-- Contenedor del logo -->
+  <g transform="translate(10, 10)">
+    
+    <!-- Escudo simple -->
+    <g transform="translate(0, 0)">
+      <!-- Círculo base azul -->
+      <circle cx="25" cy="25" r="22" fill="url(#blueGrad)" stroke="#ffffff" stroke-width="2"/>
+      
+      <!-- Letra T estilizada en el centro -->
+      <g transform="translate(25, 25)">
+        <!-- T principal -->
+        <rect x="-8" y="-12" width="16" height="4" fill="white"/>
+        <rect x="-2" y="-8" width="4" height="16" fill="white"/>
+        
+        <!-- Pequeño engranaje decorativo -->
+        <circle cx="0" cy="8" r="3" fill="url(#orangeGrad)"/>
+        <circle cx="0" cy="8" r="1.5" fill="white"/>
+      </g>
+    </g>
+    
+    <!-- Texto principal -->
+    <g transform="translate(60, 8)">
+      <!-- TECNM -->
+      <text x="0" y="16" fill="url(#blueGrad)" font-family="Arial, sans-serif" 
+            font-size="18" font-weight="bold" letter-spacing="1px">
+        TECNM
+      </text>
+      
+      <!-- Instituto Tecnológico de Culiacán -->
+      <text x="0" y="32" fill="#374151" font-family="Arial, sans-serif" 
+            font-size="12" font-weight="600">
+        Instituto Tecnológico de Culiacán
+      </text>
+      
+      <!-- Sistema de Gestión -->
+      <text x="0" y="46" fill="url(#orangeGrad)" font-family="Arial, sans-serif" 
+            font-size="10" font-weight="500">
+        Sistema de Gestión de Incidencias
+      </text>
+    </g>
+    
+  </g>
+  
+  <!-- Línea decorativa inferior -->
+  <rect x="0" y="66" width="280" height="4" fill="url(#orangeGrad)" rx="2"/>
+</svg>

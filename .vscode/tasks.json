@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Iniciar Backend",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"C:\\gestion-Incidencias\\backend\\server.js"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}

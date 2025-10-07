@@ -1,0 +1,32 @@
+{
+  "name": "Sistema de Gestión de Incidencias - TECNM Culiacán",
+  "short_name": "Gestión Incidencias",
+  "description": "Sistema de gestión de incidencias del Instituto Tecnológico de Culiacán - TECNM",
+  "theme_color": "#1e3a8a",
+  "background_color": "#f8fafc",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-64.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/system-icon.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["productivity", "education"],
+  "lang": "es-MX"
+}
